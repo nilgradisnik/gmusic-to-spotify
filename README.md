@@ -2,7 +2,7 @@
 
 Transfer Google Music playlists to Spotify.
 
-> This is not a fully featured command line app to transfer Google Music playlist to Spotify. There are manual steps required to get this working.
+> There are manual steps required to get this working.
 
 ## Usage
 
@@ -16,7 +16,7 @@ There doesn't seem to be a good programatic way to get Google Music playlists fr
 
 ### Getting playlist JSON
 
-Getting playlist in a JSON format is easy but it requires some manualy work. Navigate to [music.google.com](https://play.google.com/music/listen#/wmp) and use your browser developer tools to grab the playlist JSON payload.
+Getting playlist in a JSON format is easy but it requires some manual work. Navigate to [music.google.com](https://play.google.com/music/listen#/wmp) and use your browser developer tools to grab the playlist JSON payload.
 
 Before you click on the playlist you want to save, open developer tools and navigate to Network tab. Click on the playlist you want to save and then look for the request URL that starts with this `https://play.google.com/music/services/loaduserplaylist`. Right click on it and navigate to Copy -> Copy Response. This will store the response JSON to your clipboard.
 
