@@ -1,19 +1,34 @@
 use dotenv;
 use std::env;
 
+use clap::clap_app;
+
 mod gmusic;
 mod spotify;
 
 use gmusic::{parse_songs, read_json_from_file, Song};
 use spotify::{find_track, playlist_tracks_add, saved_tracks_add};
 
+const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+const AUTHOR: &'static str = env!("CARGO_PKG_AUTHORS");
+const DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
+
 #[tokio::main]
 async fn main() {
-    dotenv::from_filename("spotify.env").ok();
+    dotenv::from_filename("my.env").ok();
 
-    let user_id = env::var("USER_ID").expect("Spotify USER_ID required");
-    let file_name = env::args().nth(1).expect("JSON file argument required");
-    let playlist_id = env::args().nth(2).or(None);
+    let matches = clap_app!(gmusic_to_spotify =>
+        (version: VERSION)
+        (author: AUTHOR)
+        (about: DESCRIPTION)
+        (@arg GMUSIC_PLAYLIST_JSON: +required "Sets the Google Music playlist input JSON file to use")
+        (@arg SPOTIFY_PLAYLIST_ID: "Sets the Spotify playlist ID")
+    )
+    .get_matches();
+
+    let user_id = env::var("USER_ID").expect("Spotify user ID required");
+    let file_name = matches.value_of("GMUSIC_PLAYLIST_JSON").unwrap();
+    let playlist_id = matches.value_of("SPOTIFY_PLAYLIST_ID").or(None);
 
     match read_json_from_file(file_name) {
         Ok(json) => match parse_songs(json) {

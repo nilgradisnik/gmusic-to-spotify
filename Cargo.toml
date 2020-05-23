@@ -11,3 +11,4 @@ rspotify = { version = "0.9"}
 tokio = { version = "0.2", features = ["full"] }
 failure = "0.1"
 dotenv = "0.15"
+clap = "2.33"
